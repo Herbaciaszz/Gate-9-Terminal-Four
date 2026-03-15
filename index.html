@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gate 9 - Terminal Four</title>
+  <link rel="icon" type="images/x-icon" href="plane.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #050d05;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 16px 60px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .header {
+      width: 100%;
+      max-width: 820px;
+      background: #0a1a0a;
+      border: 2px solid #2a4a2a;
+      border-radius: 6px 6px 0 0;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-label {
+      color: #5dfc6e;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      margin-bottom: 2px;
+    }
+
+    .header-title {
+      color: #e8f5e0;
+      font-size: 22px;
+      letter-spacing: 0.15em;
+      font-weight: bold;
+    }
+
+    .header-time {
+      text-align: right;
+    }
+
+    .header-time-label {
+      color: #5dfc6e;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+    }
+
+    .clock {
+      color: #e8f5e0;
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      animation: blink 2s infinite;
+    }
+
+    .column-headers {
+      width: 100%;
+      max-width: 820px;
+      background: #0d200d;
+      border-left: 2px solid #2a4a2a;
+      border-right: 2px solid #2a4a2a;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      padding: 5px 18px;
+      font-size: 10px;
+      color: #4a7a4a;
+      letter-spacing: 0.3em;
+    }
+
+    .column-headers span:last-child {
+      margin-left: 24px;
+    }
+
+    .board {
+      width: 100%;
+      max-width: 820px;
+      background: #060e06;
+      border: 2px solid #2a4a2a;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      overflow: hidden;
+    }
+
+    .board-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      border-bottom: 1px solid #1a2a1a;
+      padding: 7px 18px;
+      font-size: clamp(11px, 1.5vw, 14px);
+      letter-spacing: 0.12em;
+      color: #e8f5e0;
+    }
+
+    .board-row.highlight {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .board-row .text {
+      color: #b8ffb0;
+    }
+
+    .board-row .status {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      margin-left: 24px;
+      white-space: nowrap;
+      font-weight: bold;
+    }
+
+    .status.on-time { color: #5dfc6e; }
+    .status.delayed { color: #ffd966; }
+    .status.cancelled { color: #ff5c5c; }
+    .status.final-call { color: #581626; }
+    .status.departing { color: #5dfc6e; }
+    .status.boarding { color: #5dfc6e; }
+    .status.unknown { color: #aaa; }
+
+    .footer {
+      margin-top: 24px;
+      color: #2a4a2a;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="header-label">◈ INTERNATIONAL DEPARTURES</div>
+      <div class="header-title">GATE 9 — TERMINAL FOUR</div>
+    </div>
+    <div class="header-time">
+      <div class="header-time-label">LOCAL TIME</div>
+      <div class="clock" id="clock">00:00:00</div>
+
+      <!-- Jeśli ktoś czyta ten skrypt to japierdole jebać ten zegar kurwa -->
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    document.getElementById("clock").textContent = `${hours}:${minutes}:${seconds}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+    </div>
+  </div>
+
+  <div class="column-headers">
+    <span>ANNOUNCEMENT</span>
+    <span>STATUS</span>
+  </div>
+
+  <div class="board">
+    <div class="board-row highlight">
+      <span class="text">ATTENTION ALL PASSENGERS IN TERMINAL FOUR</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row">
+      <span class="text">YOUR HEART HAS BEEN DELAYED INDEFINITELY</span>
+      <span class="status delayed">DELAYED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">PLEASE PROCEED TO GATE 9 WHERE YOU FIRST SAW HER</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row">
+      <span class="text">STANDING AT THE WINDOW WATCHING PLANES DISAPPEAR</span>
+      <span class="status delayed">DELAYED</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">THIS IS A FINAL BOARDING CALL</span>
+      <span class="status final-call">FINAL CALL</span>
+    </div>
+    <div class="board-row">
+      <span class="text">FOR EVERY WORD YOU DIDN'T SAY IN TIME</span>
+      <span class="status departing">DEPARTING</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">PASSENGERS ARE REMINDED TO KEEP</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">ALL CARRY-ON FEELINGS CLOSE AT ALL TIMES</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">WE REGRET TO ANNOUNCE THAT FLIGHT 214</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">TO THE LIFE YOU ALMOST LIVED</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">HAS BEEN CANCELLED DUE TO WEATHER</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">DUE TO FEAR</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">FOR YOUR SAFETY PLEASE DO NOT LEAVE</span>
+      <span class="status boarding">BOARDING</span>
+    </div>
+    <div class="board-row">
+      <span class="text">YOUR LOVE UNATTENDED</span>
+      <span class="status boarding">BOARDING</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">UNATTENDED LOVE WILL BE REMOVED AND DESTROYED</span>
+      <span class="status cancelled">CANCELLED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">PLEASE REPORT ANY SUSPICIOUS HOPE</span>
+      <span class="status delayed">DELAYED</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">TO THE NEAREST AUTHORITY IMMEDIATELY</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row">
+      <span class="text">CONNECTING PASSENGERS FOR GATE 31</span>
+      <span class="status boarding">BOARDING</span>
+    </div>
+    <div class="board-row">
+      <span class="text">SHE IS STILL THERE</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">SHE HAS ALWAYS BEEN THERE</span>
+      <span class="status delayed">DELAYED</span>
+    </div>
+    <div class="board-row">
+      <span class="text">ESTIMATED TIME OF ARRIVAL: UNKNOWN</span>
+      <span class="status unknown">UNKNOWN</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">THANK YOU FOR YOUR PATIENCE</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row">
+      <span class="text">THANK YOU FOR COMING BACK</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row">
+      <span class="text">WE HOPE YOU ENJOY YOUR STAY</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+    <div class="board-row highlight">
+      <span class="text">THIS TIME</span>
+      <span class="status on-time">ON TIME</span>
+    </div>
+  </div>
+
+  <div class="footer">◈ PLEASE DO NOT LEAVE YOUR LOVE UNATTENDED ◈</div><br>
+  <p style="color:#0a1a0a">kocham cię zu :)</p>
+
+</body>
+</html>
